@@ -10,4 +10,5 @@ client = AsyncIOMotorClient(uri, server_api=ServerApi('1'))
 
 db = client.dropbeat
 
-song_collection = db['dropbeat_test']
+song_collection = db['dropbeat_songs']
+user_collection = db['users']
