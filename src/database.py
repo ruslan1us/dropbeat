@@ -12,3 +12,8 @@ db = client.dropbeat
 
 song_collection = db['dropbeat_songs']
 user_collection = db['users']
+
+
+async def create_indexes():
+    await user_collection.create_index("username", unique=True)
+    await user_collection.create_index("email", unique=True)

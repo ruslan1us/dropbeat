@@ -9,8 +9,9 @@ auth_router = APIRouter(prefix='/auth', tags=['auth'])
 
 @auth_router.post('/register', status_code=status.HTTP_201_CREATED)
 async def register_user(request: User):
-    await create_user(request)
-    return {"res": "created"}
+    res = await create_user(request)
+    if not res:
+        raise HTTPException(status_code=400, detail="Username or email already taken")
 
 
 @auth_router.get("/profile")

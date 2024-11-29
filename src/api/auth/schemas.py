@@ -1,3 +1,5 @@
+from pymongo.errors import DuplicateKeyError
+
 from src.api.auth.jwttoken import create_access_token
 from src.database import user_collection
 from src.api.auth.hashing import Hash
@@ -7,7 +9,13 @@ async def create_user(user):
     hashed_pass = Hash.bcrypt(user.password)
     user_object = dict(user)
     user_object["password"] = hashed_pass
-    user = await user_collection.insert_one(user_object)
+
+    try:
+        await user_collection.insert_one(user_object)
+    except DuplicateKeyError:
+        return False
+
+    return True
 
 
 async def login(user, response):
