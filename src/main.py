@@ -12,7 +12,6 @@ async def lifespan(app: FastAPI):
     await create_indexes()
     yield
 
-
 app = FastAPI(
     lifespan=lifespan
 )
